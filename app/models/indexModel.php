@@ -21,17 +21,15 @@
             }
         }
 
-        public function checkIfEmailAdded()
+        public function checkEmail()
         {
-            if (isset($_POST["email"])) {
-                $pdo = new PDO("mysql:host=localhost;dbname=magebit_test", "root", "");
-                $sql = "SELECT * FROM emails ORDER BY id DESC LIMIT 1";
-                $q = $pdo->query($sql);
-                $q ->setFetchMode(PDO::FETCH_ASSOC);
-                $lastRow = $q->fetch();
-                if ( $lastRow["email"] == htmlspecialchars($_POST["email"])) {
-                    $this->check = "added";
-                }
+            $pdo = new PDO("mysql:host=localhost;dbname=magebit_test", "root", "");
+            $sql = "SELECT * FROM emails ORDER BY id DESC LIMIT 1";
+            $q = $pdo->query($sql);
+            $q ->setFetchMode(PDO::FETCH_ASSOC);
+            $lastRow = $q->fetch();
+            if ( $lastRow["email"] == htmlspecialchars($_POST["email"])) {
+                $this->check = "added";
             }
         }
     }

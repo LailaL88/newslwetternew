@@ -34,7 +34,7 @@ class IndexController
 
     private function getUnvalidEmailErrorMsg()
     {
-        if (!filter_var($this->model->email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->model->email, FILTER_VALIDATE_EMAIL) && $this->model->email != "") {
             $this->model->unvalidEmailErr = "Please provide a valid e-mail address";
         } elseif (substr($this->model->email, -3) == ".co") {
             $this->model->colombiaEmailErr = "We are not accepting subscriptions from Colombia emails";
@@ -50,11 +50,18 @@ class IndexController
         }
     }
 
+	public function checkIfEmailAdded()
+        {
+            if (isset($_POST["email"])) {
+                $this->model->checkEmail();
+            }
+        }
+
 	public function callFunctions()
 	{
 		$this->getPhpValidationMessages();
 		$this->model->addToDataBase();
-		$this->model->checkIfEmailAdded();
+		$this->checkIfEmailAdded();
 	}
 }
 					 

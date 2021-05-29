@@ -4,7 +4,8 @@ class ResultView
     {
         private $model;
         
-        public function __construct($model) {
+        public function __construct($model)
+        {
             $this->model = $model;
         }
 
@@ -88,7 +89,8 @@ class ResultView
 
         public function output()
         {
-            $this->showPageTop();
+            // $this->showPageTop();
+            require_once("resultPageTop.html");
             $this->makeEmailButtons();
             $this->showSearchInput();
             $this->showEmailTable($this->model->q);

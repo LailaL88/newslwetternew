@@ -3,7 +3,7 @@
 class ResultController
     {
         private $model;
-        public $input;
+        private $input;
 
         public function __construct($model)
         {
@@ -19,26 +19,28 @@ class ResultController
             }
         }
 
-        public function sortFilter($provider, $input)
+        private function sortFilter($provider, $input)
         {
-            if ($this->model->provider != "") {
+            $this->model->sql = 'SELECT * FROM emails';    
+
+            if ($this->model->provider != "" || isset($_POST["by-date"])) {
                 $this->model->sql="SELECT * FROM emails WHERE email REGEXP '$provider$' AND email LIKE '%$input%'";    
-            } elseif (isset($_POST["by-date"])) {
-                $this->model->sql="SELECT * FROM emails  WHERE email REGEXP '$provider$' AND email LIKE '%$input%'";
-            } elseif (isset($_POST["by-name"])) {
+            }
+            
+            if (isset($_POST["by-name"])) {
                 $this->model->sql="SELECT * FROM emails  WHERE email REGEXP '$provider$' AND email LIKE '%$input%' ORDER BY email";
-            } elseif (isset($_POST["all"])) {
+            }
+            
+            if (isset($_POST["all"])) {
                 $this->model->sql = 'SELECT * FROM emails';
                 $_SESSION['provider'] = "";
                 $_SESSION['input'] = "";
-            } else {
-                $this->model->sql = 'SELECT * FROM emails';           
-            }
+            } 
         
             $this->getSearchInput();    
         }
         
-        public function getButtonTexts($q)
+        private function getButtonTexts($q)
         {
             $this->model->getEmailProviderArray($q);
             foreach ($this->model->uniqueEmailEndings as $value) {
@@ -49,7 +51,7 @@ class ResultController
             }
         }
 
-        public function getProviderVariable()
+        private function getProviderVariable()
         {
             foreach ($this->model->uniqueEmailEndings as $value) {
                 $dotPos = strpos($value, ".");
@@ -64,7 +66,7 @@ class ResultController
             }
         }
 
-        public function setSessionInput()
+        private function setSessionInput()
         {
             if (isset($_SESSION['input'])) {
                 $this->input = $_SESSION['input'];

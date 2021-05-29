@@ -12,8 +12,6 @@ class ResultModel
         private $allEmailEndings = array();
         public $uniqueEmailEndings = array();
 
-        
-
         public function getAllEmails()
         {
             $pdo = new PDO("mysql:host=localhost;dbname=magebit_test", "root", "");
