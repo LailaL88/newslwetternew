@@ -13,7 +13,7 @@ for (let icon of icons) {
     })
 
     function changeIconColor() {
-        icon.querySelector("i").style.color = "#" + 131821;
+        icon.querySelector("i").style.color = "#131821";
         icon.querySelector("i").style.opacity = 0.3;
     }
 
